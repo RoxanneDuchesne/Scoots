@@ -294,36 +294,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 854355530}
-  groundDistance: 0
+  groundDistance: 2
   RB: {fileID: 706068229}
-  gravity: 0
-  moveDeadzone: 0
+  gravity: 2
+  moveDeadzone: 1
   sphereCollider: {fileID: 706068228}
-  height: 0
-  stopDeadzone: 0
-  baseSpeed: 0
-  acceleration: 0
-  maxSpeed: 0
-  friction: 0
-  moveFriction: 0
-  jumps: 0
-  baseJumpHeight: 0
-  fullJumpHeight: 0
-  jumpTime: 0
-  coyoteTime: 0
-  airControl: 0.139
+  height: 1
+  stopDeadzone: 10
+  baseSpeed: 10
+  acceleration: 5
+  maxSpeed: 30
+  friction: 0.1
+  moveFriction: 0.05
+  jumps: 2
+  baseJumpHeight: 10
+  fullJumpHeight: 20
+  jumpTime: 0.1
+  coyoteTime: 0.1
+  airControl: 0.362
   cameraTransform: {fileID: 963194228}
-  lookSensitivity: {x: 0, y: 0}
-  cameraCorrectionForce: {x: 0, y: 0}
-  zoomSensitivity: 0
-  cameraDistance: 0
-  minCameraDistance: 0
-  maxCameraDistance: 0
-  cameraLoopMultiplier: 0
-  cameraCorrectionOffset: 0
-  cameraCorrectionIntensity: 0
-  cameraHeight: 0
-  cameraSmoothness: 0
+  lookSensitivity: {x: 5, y: -5}
+  cameraCorrectionForce: {x: 0, y: 10}
+  zoomSensitivity: -0.01
+  cameraDistance: 10
+  minCameraDistance: 2
+  maxCameraDistance: 20
+  cameraLoopMultiplier: 0.5
+  cameraCorrectionOffset: -0.9
+  cameraCorrectionIntensity: 1
+  cameraHeight: 2
+  cameraSmoothness: 0.9
 --- !u!1 &854355529
 GameObject:
   m_ObjectHideFlags: 0
