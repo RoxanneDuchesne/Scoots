@@ -118,8 +118,8 @@ public class Movement : MonoBehaviour
                 break;
         }
 
-        // RB.AddForce(velocity, ForceMode.Impulse);
-        RB.velocity += velocity;
+        RB.AddForce(velocity, ForceMode.Impulse);
+        //RB.velocity += velocity;
     }
 
     private void Update()
