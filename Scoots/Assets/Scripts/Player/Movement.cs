@@ -151,8 +151,16 @@ public class Movement : MonoBehaviour
         }
 
         Vector3 snapGoal = groundHit.point + (groundHit.normal * sphereCollider.radius);
-
+        if ((groundHit.collider == null || groundHit.collider.gameObject.CompareTag("No_Snapping")))
+        {
+            return;
+        }
         if (CollisionCheck(snapGoal).collided)
+        {
+            return;
+        }
+
+        if ((groundHit.collider != null && groundHit.collider.gameObject.CompareTag("No_Snapping")))
         {
             return;
         }
