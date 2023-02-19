@@ -110,6 +110,7 @@ public class Movement : MonoBehaviour
                 break;
 
             case State.Air:
+                SnapPositionToGround();
                 SnapRotationToGround();
                 Move();
                 velocity -= Vector3.up * gravity;
@@ -139,19 +140,24 @@ public class Movement : MonoBehaviour
 
     void SnapPositionToGround()
     {
+        if (jumping)
+        {
+            return;
+        }
+
         if (ground && !moving && speed <= stopDeadzone)
         {
             velocity -= RB.velocity;
         }
 
-        Vector3 snapGoal = groundHit.point + (groundHit.normal * height);
+        Vector3 snapGoal = groundHit.point + (groundHit.normal * sphereCollider.radius);
 
         if (CollisionCheck(snapGoal).collided)
         {
             return;
         }
 
-        transform.position = snapGoal;
+        transform.position = new Vector3(transform.position.x, snapGoal.y, transform.position.z);
     }
 
     void SnapRotationToGround()
@@ -167,7 +173,7 @@ public class Movement : MonoBehaviour
             }
         }
 
-        transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(Vector3.forward, normal), normal);
+        //transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(Vector3.forward, normal), normal);
     }
 
     CollisionInformation CollisionCheck(Vector3 goal)
@@ -234,7 +240,7 @@ public class Movement : MonoBehaviour
 
         if (!jump)
         {
-            jumping = false;
+            //jumping = false;
             return;
         }
 
@@ -265,7 +271,7 @@ public class Movement : MonoBehaviour
             velocity += jumpNormal * ((Time.fixedDeltaTime * (Mathf.Sqrt(2 * (gravity / Time.fixedDeltaTime) * fullJumpHeight) - Mathf.Sqrt(2 * (gravity / Time.fixedDeltaTime) * baseJumpHeight))) / jumpTime);
             if (currentJumpTime <= 0)
             {
-                jumping = false;
+                //jumping = false;
             }
         }
     }
