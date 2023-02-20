@@ -37,6 +37,9 @@ public class Movement : MonoBehaviour
     [SerializeField] float acceleration;
     [SerializeField] float maxSpeed;
 
+    [SerializeField] float boostAcceleration;
+    [SerializeField] float boostMaxSpeed;
+
     [SerializeField] float friction;
     [SerializeField] float moveFriction;
 
@@ -51,6 +54,7 @@ public class Movement : MonoBehaviour
     int currentJumps;
     float currentJumpTime;
     float currentCoyoteTime;
+    bool disableSnaping;
 
     [SerializeField, Range(0, 1)] float airControl; // Set between 0-1
 
@@ -91,6 +95,8 @@ public class Movement : MonoBehaviour
                     break;
             }
         };
+
+        lookOffset = new Vector2(-90, 0);
     }
     private void FixedUpdate()
     {
@@ -134,13 +140,12 @@ public class Movement : MonoBehaviour
         verticalVelocity = Vector3.Dot(RB.velocity, transform.up);
         moveVelocity = RB.velocity - (transform.up * verticalVelocity);
         speed = moveVelocity.magnitude;
-        speedPercent = Mathf.Clamp(speed / maxSpeed, 0, 1);
         moving = move.magnitude > 0 && speed > moveDeadzone;
     }
 
     void SnapPositionToGround()
     {
-        if (jumping)
+        if (!ShouldSnapToGround())
         {
             return;
         }
@@ -151,16 +156,8 @@ public class Movement : MonoBehaviour
         }
 
         Vector3 snapGoal = groundHit.point + (groundHit.normal * sphereCollider.radius);
-        if ((groundHit.collider == null || groundHit.collider.gameObject.CompareTag("No_Snapping")))
-        {
-            return;
-        }
+  
         if (CollisionCheck(snapGoal).collided)
-        {
-            return;
-        }
-
-        if ((groundHit.collider != null && groundHit.collider.gameObject.CompareTag("No_Snapping")))
         {
             return;
         }
@@ -211,10 +208,21 @@ public class Movement : MonoBehaviour
             return;
         }
 
+        float currentAcceleration = acceleration;
+        float currentMaxSpeed = maxSpeed;
+
+        if ((groundHit.collider != null && groundHit.collider.gameObject.CompareTag("Boost")))
+        {
+           currentAcceleration = boostAcceleration;
+           currentMaxSpeed = boostMaxSpeed;
+        }
+
+        float percent = Mathf.Clamp(speed / currentMaxSpeed, 0, 1);
+
         Vector3 moveForwardNormal = Vector3.ProjectOnPlane(cameraTransform.forward, transform.up).normalized;
         Vector3 moveRightNormal = Vector3.ProjectOnPlane(cameraTransform.right, transform.up).normalized;
 
-        velocity += ((moveForwardNormal * move.y) + (moveRightNormal * move.x)) * (moving ? acceleration * (1 - speedPercent) : baseSpeed * (1 - Mathf.Max(Vector3.Dot(Vector3.forward, Vector3.up), 0)));
+        velocity += ((moveForwardNormal * move.y) + (moveRightNormal * move.x)) * (moving ? currentAcceleration * (1 - percent) : baseSpeed * (1 - Mathf.Max(Vector3.Dot(Vector3.forward, Vector3.up), 0)));
     }
 
     void Friction()
@@ -223,6 +231,28 @@ public class Movement : MonoBehaviour
         Vector3 frictionVelocity = moving ? (RB.velocity - (Vector3.Project(RB.velocity, frictionMask) * Mathf.Max(Vector3.Dot(RB.velocity.normalized, frictionMask.normalized), 0))) * moveFriction : RB.velocity * friction;
 
         velocity += moving ? -frictionVelocity + (velocity.normalized * frictionVelocity.magnitude * Mathf.Abs(Vector3.Dot(Vector3.Cross(moveVelocity, transform.up).normalized, velocity.normalized))) : -frictionVelocity;
+    }
+
+    bool ShouldSnapToGround()
+    {
+        if (ground && (groundHit.collider != null && groundHit.collider.gameObject.CompareTag("No_Snapping")))
+        {
+            disableSnaping = true;
+            return false;
+        }
+
+        if (ground)
+        {
+            disableSnaping = false;
+            return true;
+        }
+
+        if (jumping || disableSnaping)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     void Jump()
