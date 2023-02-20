@@ -210,13 +210,13 @@ public class Movement : MonoBehaviour
 
         float currentAcceleration = acceleration;
         float currentMaxSpeed = maxSpeed;
-
+        /*
         if ((groundHit.collider != null && groundHit.collider.gameObject.CompareTag("Boost")))
         {
            currentAcceleration = boostAcceleration;
            currentMaxSpeed = boostMaxSpeed;
         }
-
+        */
         float percent = Mathf.Clamp(speed / currentMaxSpeed, 0, 1);
 
         Vector3 moveForwardNormal = Vector3.ProjectOnPlane(cameraTransform.forward, transform.up).normalized;
