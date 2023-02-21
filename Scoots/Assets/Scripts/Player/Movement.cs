@@ -73,6 +73,8 @@ public class Movement : MonoBehaviour
     Vector3 cameraNormal;
     Vector2 lookOffset;
 
+    [SerializeField] GameObject catMesh;
+
     void Start()
     {
         //Cursor.lockState = CursorLockMode.Locked;
@@ -125,6 +127,7 @@ public class Movement : MonoBehaviour
                 break;
         }
 
+        UpdateMesh();
         RB.AddForce(velocity, ForceMode.Impulse);
         //RB.velocity += velocity;
     }
@@ -141,6 +144,14 @@ public class Movement : MonoBehaviour
         moveVelocity = RB.velocity - (transform.up * verticalVelocity);
         speed = moveVelocity.magnitude;
         moving = move.magnitude > 0 && speed > moveDeadzone;
+    }
+
+    void UpdateMesh()
+    {
+        //Vector3 groundAngle = groundHit.transform.eulerAngles;
+        catMesh.transform.rotation = Quaternion.Euler(new Vector3(lookOffset.y / 2, lookOffset.x, 0));
+        //catMesh.transform.rotation = Quaternion.Euler(groundAngle);
+        // catMesh.transform.position += new Vector3(0, 10, 0);
     }
 
     void SnapPositionToGround()

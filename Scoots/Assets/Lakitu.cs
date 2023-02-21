@@ -42,6 +42,7 @@ public class Lakitu : MonoBehaviour
                 }
             }
             coots.transform.position = closestPoint;
+            coots.transform.rotation = Quaternion.identity;
         }
     }
 }
