@@ -362,6 +362,7 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/Lakitu.cs"
+"Assets/Mesh_Handler.cs"
 "Assets/Pickups.cs"
 "Assets/Scripts/Player/Movement.cs"
 "Assets/SplineMesh/Scripts/Bezier/CubicBezierCurve.cs"
