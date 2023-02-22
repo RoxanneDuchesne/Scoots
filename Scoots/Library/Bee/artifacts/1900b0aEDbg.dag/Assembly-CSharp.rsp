@@ -387,6 +387,7 @@
 "Assets/CoffeeShopStarterPack/Scripts/Utilities/BasicGameEvents.cs"
 "Assets/CoffeeShopStarterPack/Scripts/Utilities/ScreenShotHelper.cs"
 "Assets/CoffeeShopStarterPack/Scripts/Utilities/SliceHelper.cs"
+"Assets/GameStart.cs"
 "Assets/Lakitu.cs"
 "Assets/LoadScene.cs"
 "Assets/Mesh_Handler.cs"
