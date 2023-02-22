@@ -29,7 +29,7 @@ public class Pickups : MonoBehaviour
             float distance = Vector3.Distance(this.transform.position, hearts[i].transform.position);
             Vector3 toTarget = (this.transform.position - hearts[i].transform.position).normalized; // Remove if heart is behind player
 
-            if (distance < 1 || Vector3.Dot(toTarget, transform.forward) > 0)
+            if (distance < 1 || Vector3.Dot(toTarget, transform.forward) > 0.8)
             {
                 hearts[i].SetActive(false);
                 hearts.RemoveAt(i);
