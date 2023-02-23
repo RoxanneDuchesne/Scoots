@@ -11,8 +11,33 @@ public class Pickups : MonoBehaviour
     List<GameObject> hearts = new List<GameObject>();
     int currentHearts = 0;
 
+    // Collision Events
+    public bool endFiring = false;
+    public bool sendUp = false;
+    public bool liftLid = false;
+
     void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Lift_Lid"))
+        {
+            liftLid = true;
+        }
+
+        if (other.gameObject.CompareTag("End_Battle"))
+        {
+            endFiring = true;
+        }
+
+        if (other.gameObject.CompareTag("Send_Up"))
+        {
+            sendUp = true;
+        }
+
+        if (!other.gameObject.CompareTag("Heart"))
+        {
+            return;
+        }
+
         currentHearts += 1;
         heartCounter.text = " " + currentHearts;
         

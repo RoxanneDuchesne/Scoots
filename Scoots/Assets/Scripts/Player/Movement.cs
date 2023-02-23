@@ -16,6 +16,7 @@ public class Movement : MonoBehaviour
     bool ground;
 
     [SerializeField] Rigidbody RB;
+    [SerializeField] GameObject coots;
     Vector3 velocity;
 
     [SerializeField] float gravity;
@@ -129,7 +130,14 @@ public class Movement : MonoBehaviour
 
         UpdateMesh();
         RB.AddForce(velocity, ForceMode.Impulse);
-        //RB.velocity += velocity;
+
+        if (coots.GetComponent<Pickups>().sendUp)
+        {
+            RB.AddForce(Vector3.up * 450, ForceMode.Impulse);
+            coots.GetComponent<Pickups>().sendUp = false;
+
+            jumping = true;
+        }
     }
 
     private void Update()
@@ -350,7 +358,6 @@ public class Movement : MonoBehaviour
         velocity -= (moveVelocity - (Vector3.Project(moveVelocity, Vector3.ProjectOnPlane(velocity, transform.up)) * Mathf.Max(Vector3.Dot(moveVelocity.normalized, Vector3.ProjectOnPlane(velocity, transform.up).normalized), 0))) * airControl;
     }
 
-
     void Look()
     {
         Vector2 goalOffset = lookOffset + Vector2.Scale(lookDelta * Time.fixedDeltaTime, lookSensitivity);
@@ -379,6 +386,7 @@ public class Movement : MonoBehaviour
         lookOffset.x += Vector3.Dot(Vector3.ProjectOnPlane(cameraTransform.right, transform.up), moveVelocity) * speedPercent * cameraCorrectionForce.x * Vector3.Dot(cameraTransform.up, Vector3.up);
         lookOffset.y += (Vector3.Dot(cameraTransform.up, transform.up) + cameraCorrectionOffset) * speedPercent * cameraCorrectionForce.y * cameraCorrectionIntensity;
     }
+
     struct CollisionInformation
     {
         public RaycastHit hitInfo;
