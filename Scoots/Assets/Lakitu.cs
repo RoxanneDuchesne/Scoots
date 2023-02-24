@@ -35,7 +35,7 @@ public class Lakitu : MonoBehaviour
                 Vector3 point = respawnPoints[i].transform.position;
                 float distance = Vector3.Distance(coots.transform.position, point);
 
-                if (distance < closestDistance)
+                if (distance < closestDistance && coots.transform.position.x < point.x)
                 {
                     closestDistance = distance;
                     closestPoint = point;

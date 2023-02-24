@@ -393,10 +393,13 @@
 "Assets/LifeLid.cs"
 "Assets/LoadScene.cs"
 "Assets/Mesh_Handler.cs"
+"Assets/MovingPlateform.cs"
+"Assets/MovingY.cs"
 "Assets/Orb_Handler.cs"
 "Assets/OrdHandler.cs"
 "Assets/Pickups.cs"
 "Assets/Scripts/Player/Movement.cs"
+"Assets/Speedometer.cs"
 "Assets/SpinX.cs"
 "Assets/SpinY.cs"
 "Assets/SplineMesh/Scripts/Bezier/CubicBezierCurve.cs"
@@ -420,6 +423,7 @@
 "Assets/SplineMesh/Scripts/Utils/CameraUtility.cs"
 "Assets/SplineMesh/Scripts/Utils/MeshUtility.cs"
 "Assets/SplineMesh/Scripts/Utils/UOUtility.cs"
+"Assets/Timer.cs"
 -langversion:9.0
 
 /deterministic

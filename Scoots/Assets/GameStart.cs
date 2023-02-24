@@ -22,12 +22,18 @@ public class GameStart : MonoBehaviour
     bool spaceDisplayHit1 = false;
     bool spaceDisplayHit2 = false;
 
+    [SerializeField] AudioSource startAudio;
+    [SerializeField] AudioSource gameAudio;
+
     // Start is called before the first frame update
     void Start()
     {
         startPosition = coots.transform.position;
         wasdTutorial.SetActive(false);
         spaceTutorial.SetActive(false);
+
+        gameAudio.volume = 0;
+        startAudio.volume = 0.1f;
     }
 
     // Update is called once per frame
@@ -35,17 +41,9 @@ public class GameStart : MonoBehaviour
     {
         delayTimeS += Time.deltaTime;
 
-        if (delayTimeS < startDelayS)
+        if (gameAudio.volume < 0.1 && delayTimeS > startDelayS)
         {
-            coots.transform.position = startPosition;
-        } 
-        else if (delayTimeS < wasdDelayS)
-        {
-            wasdTutorial.SetActive(true);
-        }
-        else
-        {
-            wasdTutorial.SetActive(false);
+            gameAudio.volume +=  0.05f * Time.deltaTime;
         }
 
         if (coots.transform.position.z < spaceDisplayZ1 && !spaceDisplayHit1)
@@ -67,6 +65,22 @@ public class GameStart : MonoBehaviour
         else
         {
             spaceTutorial.SetActive(false);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (delayTimeS < startDelayS)
+        {
+            coots.transform.position = startPosition;
+        }
+        else if (delayTimeS < wasdDelayS)
+        {
+            wasdTutorial.SetActive(true);
+        }
+        else
+        {
+            wasdTutorial.SetActive(false);
         }
     }
 }

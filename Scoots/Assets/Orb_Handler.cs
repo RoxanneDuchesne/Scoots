@@ -5,6 +5,7 @@ using UnityEngine;
 public class Orb_Handler : MonoBehaviour
 {
     [SerializeField] GameObject coots;
+    [SerializeField] GameObject invisablePlane;
 
     [SerializeField] GameObject blaster1;
     [SerializeField] GameObject blaster2;
@@ -18,6 +19,10 @@ public class Orb_Handler : MonoBehaviour
 
     bool startFiring = false;
 
+    [SerializeField] AudioSource gameAudio;
+    [SerializeField] AudioSource battleAudio;
+    bool audioStarted = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +30,7 @@ public class Orb_Handler : MonoBehaviour
         {
             blasts.Add(this.transform.GetChild(i).gameObject);
         }
+        battleAudio.volume = 0;
     }
 
     // Update is called once per frame
@@ -46,6 +52,17 @@ public class Orb_Handler : MonoBehaviour
             }
 
             return;
+        }
+
+        invisablePlane.SetActive(false);
+
+        if (gameAudio.volume > 0 || battleAudio.volume < 0.1f)
+        {
+            gameAudio.volume -= 0.1f * Time.deltaTime;
+            battleAudio.volume += 0.1f * Time.deltaTime;
+        } if (battleAudio.volume > 0.1f)
+        {
+            battleAudio.volume = 0.1f;
         }
 
         lastFireS += Time.deltaTime;

@@ -75,6 +75,7 @@ public class Movement : MonoBehaviour
     Vector2 lookOffset;
 
     [SerializeField] GameObject catMesh;
+    [SerializeField] AudioSource meow;
 
     void Start()
     {
@@ -135,6 +136,14 @@ public class Movement : MonoBehaviour
         {
             RB.AddForce(Vector3.up * 450, ForceMode.Impulse);
             coots.GetComponent<Pickups>().sendUp = false;
+
+            jumping = true;
+        }
+
+        if (coots.GetComponent<Pickups>().sendUpHalf)
+        {
+            RB.AddForce(Vector3.up * 770, ForceMode.Impulse);
+            coots.GetComponent<Pickups>().sendUpHalf = false;
 
             jumping = true;
         }
@@ -303,6 +312,7 @@ public class Movement : MonoBehaviour
 
         if (canJump)
         {
+            meow.Play();
             jumpNormal = transform.up;
             float jumpForce = Mathf.Sqrt(2 * (gravity / Time.fixedDeltaTime) * (ground ? (baseJumpHeight - groundDistance) : baseJumpHeight));
 
