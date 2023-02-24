@@ -399,6 +399,7 @@
 "Assets/OrdHandler.cs"
 "Assets/Pickups.cs"
 "Assets/Scripts/Player/Movement.cs"
+"Assets/ScrollY.cs"
 "Assets/Speedometer.cs"
 "Assets/SpinX.cs"
 "Assets/SpinY.cs"

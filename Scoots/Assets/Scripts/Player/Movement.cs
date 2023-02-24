@@ -79,7 +79,7 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
 
         playerInput.onActionTriggered += callbackContext =>
         {

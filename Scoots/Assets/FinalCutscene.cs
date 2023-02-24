@@ -14,6 +14,8 @@ public class FinalCutscene : MonoBehaviour
     [SerializeField] GameObject ders;
     [SerializeField] GameObject dersPosition;
 
+    [SerializeField] GameObject heart;
+
     float offsetY = 0;
     bool isPulseIncreasing = false;
     Quaternion startPosRight;
@@ -23,9 +25,11 @@ public class FinalCutscene : MonoBehaviour
 
     float timer = 0;
     float destructionDelay = 3;
-    float armsFallDelay = 5;
-    float dersDelay = 9;
-    float creditsDelay = 10;
+    float armsFallDelay = 4.5f;
+    float dersDelay = 8;
+    float creditsDelay = 8;
+
+    bool firstDers = true;
 
     // Start is called before the first frame update
     void Start()
@@ -91,13 +95,23 @@ public class FinalCutscene : MonoBehaviour
             leftArm.transform.position += new Vector3(0, -10, 0);
 
             body.transform.rotation = Quaternion.Euler(rightArm.transform.rotation.eulerAngles + new Vector3(360, 0, 0) * Time.deltaTime);
+            ders.SetActive(false);
         }
 
         if (armsFallDelay < timer && dersDelay > timer)
         {
-            ders.transform.localScale = new Vector3(1000, 1000, 1000);
-            ders.transform.position = dersPosition.transform.position;
-            ders.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 90));
+            if (firstDers)
+            {
+                ders.SetActive(true);
+                ders.transform.localScale = new Vector3(100, 100, 100);
+                ders.transform.position = dersPosition.transform.position;
+                ders.transform.rotation = Quaternion.Euler(new Vector3(-90, -10, 90));
+                heart.transform.position = dersPosition.transform.position;
+                heart.transform.localScale = new Vector3(10, 10, 10);
+                firstDers = false;
+            }
+
+            heart.transform.position += new Vector3(0, 5, 0) * Time.deltaTime;
         }
 
     }
